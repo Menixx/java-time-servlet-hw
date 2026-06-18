@@ -24,6 +24,7 @@ A simple Java web application built on Apache Tomcat that displays the current t
 |-----|--------|
 | `/time` | Current time in UTC (or last used timezone from cookie) |
 | `/time?timezone=Europe/Berlin` | Current time in Berlin |
+| `/time?timezone=UTC+2` | Current time in UTC+2 |
 | `/time?timezone=INVALID` | 400 Bad Request — Invalid timezone |
 
 ## Project Structure

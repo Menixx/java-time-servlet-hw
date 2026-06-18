@@ -47,6 +47,10 @@ public class TimeServlet extends HttpServlet {
 
         if (timezone != null) {
             timezone = timezone.replace(" ", "+");
+            // Для ZoneId потрібен формат GMT+X замість UTC+X
+            String zoneIdStr = timezone.replace("UTC+", "GMT+")
+                    .replace("UTC-", "GMT-");
+            ZoneId zoneId = ZoneId.of(zoneIdStr);
         }
 
         // Якщо timezone не переданий — шукаємо в Cookie

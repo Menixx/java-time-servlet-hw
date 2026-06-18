@@ -28,10 +28,14 @@ public class TimezoneValidateFilter implements Filter {
         // Замінюємо пробіл на "+" (браузер кодує UTC+2 як "UTC 2")
         timezone = timezone.replace(" ", "+");
 
-        // Валідація: TimeZone.getTimeZone повертає GMT для невідомих поясів
-        TimeZone tz = TimeZone.getTimeZone(timezone);
+        // Java розуміє GMT+2 але не UTC+2
+        String tzForValidation = timezone.replace("UTC+", "GMT+")
+                .replace("UTC-", "GMT-");
+
+        // Валідація
+        TimeZone tz = TimeZone.getTimeZone(tzForValidation);
         boolean isGMT = tz.getID().equals("GMT");
-        boolean userSentGMT = timezone.equalsIgnoreCase("GMT")
+        boolean userSentGMT = tzForValidation.equalsIgnoreCase("GMT")
                 || timezone.equalsIgnoreCase("UTC");
 
         if (isGMT && !userSentGMT) {
